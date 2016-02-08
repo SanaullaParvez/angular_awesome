@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<script src="../libs/jquery/dist/jquery.min.js"></script>
+<script src="../libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="../libs/bootstrap/dist/css/bootstrap.min.css"/>
+<body>
+<div class="container main-content" ng-app="wom-ads" ng-controller="AdsCtrl">
+    <!-- directive:w3-test-directive -->
+
+    <hr/>
+    <form ng-show="students">
+        <input type="text" ng-model="fname"/>
+        <select ng-model="fname" name="fname" id="">
+            <option value="Sanaulla">Sanaulla</option>
+            <option value="Sahidul">Sahidul</option>
+        </select>
+        <pre>
+            <p ng-repeat="name in students | filter:fname">{{name}}</p>
+        </pre>
+    </form>
+    <hr/>
+    <div ng-show="campaigns">
+        <p>Status: <input type="text" ng-model="searchCampaign.paused"></p>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+            <tr ng-repeat="campaign in campaigns | filter:searchCampaign">
+                <td>{{campaign.name}}</td>
+                <td>{{campaign.paused}}</td>
+                <td>{{campaign.start_time | date:"longDate"}}</td>
+                <td>{{campaign.end_time | date:"longDate"}}</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<script src="../libs/angular/angular.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
