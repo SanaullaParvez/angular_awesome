@@ -19,6 +19,10 @@
     <!-- Ladda Theme template -->
     <link href="libs/ladda/dist/ladda-themeless.min.css" rel="stylesheet" >
 
+    <!-- data-table style sheet -->
+    <link href="libs/angular-material/angular-material.min.css" rel="stylesheet">
+    <link href="libs/angular-material-data-table/dist/md-data-table.min.css" rel="stylesheet">
+
     <!-- Custom styles for this template -->
     <link href="assets/css/dashboard.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">

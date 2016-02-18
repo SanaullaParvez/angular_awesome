@@ -1,0 +1,15 @@
+<h2 class="sub-header">{{ 'DONOR' | translate }}</h2>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th data-ng-repeat="key in donor_key">{{key}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="donor in donors">
+            <td data-ng-repeat="val in donor">{{val}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

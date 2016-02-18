@@ -1,0 +1,15 @@
+<h2 class="sub-header">{{ 'TEACHER' | translate }}</h2>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th data-ng-repeat="key in teacher_key">{{key}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="teacher in teachers">
+            <td data-ng-repeat="val in teacher">{{val}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
