@@ -85,8 +85,7 @@ app.controller('mmsCtrl', [
     '$location',
     'Records',
     '$httpParamSerializerJQLike',
-    '$nutrition',
-    function ($scope, $http, $translate, $location, Records, $httpParamSerializerJQLike, $nutrition) {
+    function ($scope, $http, $translate, $location, Records, $httpParamSerializerJQLike) {
         $scope.autoScroll = true;
         $scope.base_url = 'http://localhost/angular_awesome/';
 
@@ -141,7 +140,6 @@ app.controller('mmsCtrl', [
                 data: $scope.formModel
             }).success(function (data) {
                 console.log(":)");
-                console.log(data);
                 $scope.submitting = false;
                 $scope.submitted = true;
                 $scope.has_error = false;
@@ -154,8 +152,6 @@ app.controller('mmsCtrl', [
             });
 
         };
-        console.log($nutrition.desserts)
-
 
     }]);
 
@@ -282,8 +278,9 @@ app.controller('nutritionController', ['$mdDialog', '$nutrition', '$scope', func
     $scope.query = {
         filter: '',
         limit: '5',
-        order: 'nameToLower',
-        page: 1
+        order: 'id',
+        page: 1,
+        tableName: 'students'
     };
 
     function getDesserts(query) {
@@ -301,7 +298,7 @@ app.controller('nutritionController', ['$mdDialog', '$nutrition', '$scope', func
             controllerAs: 'ctrl',
             focusOnOpen: false,
             targetEvent: event,
-            templateUrl: 'templates/add-item-dialog.html',
+            templateUrl: 'view/student/form.html',
         }).then(getDesserts);
     };
 
@@ -354,7 +351,7 @@ app.factory('$nutrition', ['$resource', function ($resource) {
     'use strict';
 
     return {
-        desserts: $resource('http://localhost/angular_awesome/model/select.php?table_name=students')
+        desserts: $resource('http://localhost/angular_awesome/model/select.php')
     };
 }]);
 app.factory('$authorize', ['$resource', function ($resource) {
