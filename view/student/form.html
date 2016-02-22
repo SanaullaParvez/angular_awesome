@@ -1,82 +1,162 @@
-<form ng-submit="onSubmit()"
-      novalidate="novalidate" >
-    <div class="form-group" >
-        <label for="name" class="control-label">Name</label >
-        <input type="text"
-               class="form-control"
-               ng-model="formModel.name"
-               id="name">
-    </div >
+<form class="form-horizontal" ng-submit="onSubmit()"
+      novalidate="novalidate">
 
-    <div class="form-group" >
-        <label for="address" class="control-label">Address</label >
-        <input type="text"
-               class="form-control"
-               ng-model="formModel.address"
-               id="address" >
-    </div >
 
     <div class="form-group">
-        <label for="contact_no" class="control-label">Contact No</label >
-        <input type="text"
-               class="form-control"
-               ng-model="formModel.contact_no"
-               id="contact_no" >
-    </div >
+        <label for="admission_no" class="col-sm-2 control-label">{{'admission_no' | translate}}</label>
+        <div class="col-sm-10">
+            <input type="text"
+                   class="form-control"
+                   ng-model="formModel.admission_no"
+                   id="admission_no">
+        </div>
+    </div>
 
     <div class="form-group">
-        <label for="guardian_name" class="control-label">Guardian Name</label >
-        <input type="text"
-               class="form-control"
-               ng-model="formModel.guardian_name"
-               id="guardian_name" >
-    </div >
+        <label for="admission_date" class="col-sm-2 control-label">{{'admission_date' | translate}}</label>
+        <div class="col-sm-10">
+            <input type="date"
+                   class="form-control"
+                   ng-model="formModel.admission_date"
+                   id="admission_date">
+        </div>
+    </div>
 
     <div class="form-group">
-        <label for="father_name" class="control-label">Father Name</label >
-        <input type="text"
-               class="form-control"
-               ng-model="formModel.father_name"
-               id="father_name" >
-    </div >
+        <label for="name" class="col-sm-2 control-label">{{'student_name' | translate}}</label>
+        <div class="col-sm-10">
+            <input type="text"
+                   class="form-control"
+                   ng-model="formModel.name"
+                   id="name">
+        </div>
+    </div>
+
 
     <div class="form-group">
-        <label for="guardian_contact_no" class="control-label">Guardian Contact No</label >
-        <input type="text"
-               class="form-control"
-               ng-model="formModel.guardian_contact_no"
-               id="guardian_contact_no" >
-    </div >
+        <label for="age" class="col-sm-2 control-label">{{'age' | translate}}</label>
+        <div class="col-sm-10">
+            <input type="number"
+                   class="form-control"
+                   ng-model="formModel.age"
+                   min="3"
+                   max="64"
+                   id="age">
+        </div>
+    </div>
 
-    <div class="form-group" >
-        <label for="age" class="control-label">Age</label >
-        <input type="number"
-               class="form-control"
-               ng-model="formModel.age"
-               min="3"
-               max="64"
-               id="age">
-    </div >
 
-    <div class="form-group" >
-        <label for="class_name" class="control-label">Class Name</label >
-        <select id="class_name"
-                class="form-control"
-                ng-model="formModel.class_name">
-            <option value="" >Please Choose</option >
-            <option value="0" >Male</option >
-            <option value="1" >Female</option >
-        </select >
-    </div >
 
-    <div class="form-group" >
-        <label for="roll_no" class="control-label">Roll No</label >
-        <input type="number"
-               class="form-control"
-               ng-model="formModel.roll_no"
-               id="roll_no"
-               required="required">
-    </div >
+    <div class="form-group">
+        <label for="father_name" class="col-sm-2 control-label">{{'father_name' | translate}}</label>
+        <div class="col-sm-10">
+            <input type="text"
+                   class="form-control"
+                   ng-model="formModel.father_name"
+                   id="father_name">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="guardian_name" class="col-sm-2 control-label">{{'guardian_name' | translate}}</label>
+        <div class="col-sm-10">
+            <input type="text"
+                   class="form-control"
+                   ng-model="formModel.guardian_name"
+                   id="guardian_name">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="relation" class="col-sm-2 control-label">{{'relation' | translate}}</label>
+        <div class="col-sm-10">
+            <input type="text"
+                   class="form-control"
+                   ng-model="formModel.relation"
+                   id="relation">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="contact_no" class="col-sm-2 control-label">{{'contact_no' | translate}}</label>
+        <div class="col-sm-10">
+            <input type="text"
+                   class="form-control"
+                   ng-model="formModel.contact_no"
+                   id="contact_no">
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <label for="class_name" class="col-sm-2 control-label">{{'class_name' | translate}}</label>
+        <div class="col-sm-10">
+            <select id="class_name"
+                    class="form-control"
+                    ng-model="formModel.class_name">
+                <option value="">Please Choose</option>
+                <option value="1">Male</option>
+                <option value="2">Female</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="rental_bill" class="col-sm-2 control-label">{{'rental_bill' | translate}}</label>
+        <div class="col-sm-10">
+            <input type="number"
+                   class="form-control"
+                   ng-model="formModel.rental_bill"
+                   id="rental_bill"
+                   required="required">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="monthly_fees" class="col-sm-2 control-label">{{'monthly_fees' | translate}}</label>
+        <div class="col-sm-10">
+            <input type="number"
+                   class="form-control"
+                   ng-model="formModel.monthly_fees"
+                   id="monthly_fees"
+                   required="required">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="book_bill" class="col-sm-2 control-label">{{'book_bill' | translate}}</label>
+        <div class="col-sm-10">
+            <input type="number"
+                   class="form-control"
+                   ng-model="formModel.book_bill"
+                   id="book_bill"
+                   required="required">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="cash" class="col-sm-2 control-label">{{'cash' | translate}}</label>
+        <div class="col-sm-10">
+            <input type="number"
+                   class="form-control"
+                   ng-model="formModel.cash"
+                   id="cash"
+                   required="required">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="arrears" class="col-sm-2 control-label">{{'arrears' | translate}}</label>
+        <div class="col-sm-10">
+            <input type="number"
+                   class="form-control"
+                   ng-model="formModel.arrears"
+                   id="arrears"
+                   required="required">
+        </div>
+    </div>
 
     <div class="form-group">
 
@@ -93,5 +173,5 @@
         </button>
     </div>
 
-</form >
+</form>
 <pre>{{ formModel | json }}</pre>

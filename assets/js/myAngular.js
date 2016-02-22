@@ -63,7 +63,22 @@ app.config([
             'ADMISSION': 'ভর্তি',
             'DONOR': 'দাতা ',
             'ADMISSION_FROM': 'This is a paragraph',
-            'STUDENT_ADMISSION':'ছাত্র ভর্তি'
+            'STUDENT_ADMISSION':'ছাত্র ভর্তি',
+
+            'admission_no':'ভর্তি নং ',
+            'admission_date':'ভর্তির তারিখ ',
+            'student_name': 'ছাত্রের নাম ',
+            'age': 'বয়স ',
+            'father_name': 'পিতার নাম ',
+            'guardian_name': 'অভিভাবক ',
+            'relation': 'সম্পর্ক ',
+            'contact_no': 'মোবাইল ',
+            'class_name': 'জামাত ',
+            'rental_bill': 'বোডিং বাবদ',
+            'monthly_fees': 'বেতন বাবদ ',
+            'book_bill': 'কিতাব বাবদ ',
+            'cash': 'নগদ ',
+            'arrears': 'বকেয়া '
 
         });
         $translateProvider.preferredLanguage('bn');

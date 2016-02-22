@@ -1,3 +1,6 @@
+<?php
+require __DIR__.'/../constants/header.php';
+?>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -5,7 +8,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <base href={{base_url}} target="_blank">
+    <base href="<?php echo BASE_URL?>" target="_blank">
     <link rel="icon" href="assets/images/favicon.ico">
 
     <title>Dashboard Template for Bootstrap</title>

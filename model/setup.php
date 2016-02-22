@@ -1,13 +1,9 @@
 <?php
+include_once('../constants/mysql.php');
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-$servername = "localhost";
-$username = "root";
-$password = "root123";
-$database = "a6207060_sana";
-
 // Create connection
-$mysqli = new mysqli($servername, $username, $password, $database);
+$mysqli = new mysqli(MYSQL_SERVER, MYSQL_USER, MYSQL_PASS, MYSQL_DB,MYSQL_PORT);
 $mysqli->set_charset('utf8');
 
 // Check connection
@@ -18,4 +14,3 @@ if (!$mysqli->set_charset('utf8')) {
     printf("Error loading character set utf8: %s\n", $mysqli->error);
     exit;
 }
-?>

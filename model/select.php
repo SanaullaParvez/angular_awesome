@@ -1,5 +1,5 @@
 <?php
-include_once 'mysql.php';
+include_once 'setup.php';
 $table_name = !empty($_GET["table_name"])? $_GET["table_name"] : $_GET["tableName"];
 $num_rows = $mysqli->query("SELECT * FROM ($table_name)")->num_rows;
 $limit = !empty($_GET['limit'])? $_GET['limit'] : $num_rows;

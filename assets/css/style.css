@@ -14,6 +14,10 @@
     color: rgba(0,0,0,.54);
     font-family: Roboto,"Helvetica Neue",sans-serif;
 }
+.form-group.required .control-label:after {
+    content:"*";
+    color:red;
+}
 /* Material Icons
  START
 */
