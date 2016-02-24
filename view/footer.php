@@ -9,6 +9,7 @@
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
 <script src="libs/angular/angular.min.js"></script>
+<script src="libs/oclazyload/dist/ocLazyLoad.min.js"></script>
 <script src="libs/angular-auto-validate/dist/jcs-auto-validate.min.js" ></script >
 <script src="libs/ladda/dist/spin.min.js" ></script >
 <script src="libs/ladda/dist/ladda.min.js" ></script >

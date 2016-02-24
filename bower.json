@@ -30,6 +30,7 @@
     "angular-material-data-table": "~0.9.11"
   },
   "devDependencies": {
-    "gulp": "~3.9.1"
+    "gulp": "~3.9.1",
+    "oclazyload": "~1.0.9"
   }
 }

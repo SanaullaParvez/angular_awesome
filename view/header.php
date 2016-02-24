@@ -11,7 +11,7 @@ require __DIR__.'/../constants/header.php';
     <base href="<?php echo BASE_URL?>" target="_blank">
     <link rel="icon" href="assets/images/favicon.ico">
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>{{ 'KARIMIA' | translate }}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">

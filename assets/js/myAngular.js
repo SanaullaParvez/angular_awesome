@@ -1,24 +1,25 @@
 angular.isUndefinedOrNull = function (val) {
     return angular.isUndefined(val) || val === null
 }
-var app = angular.module('mms', [
+var MadrasaApp = angular.module('mms', [
     'jcs-autoValidate',
     'angular-ladda',
     'ui.router',
     'pascalprecht.translate',
     'md.data.table',
     'ngMaterial',
-    'ngResource'
+    'ngResource',
+    'oc.lazyLoad'
 ]);
 
-app.config(function ($httpProvider) {
+MadrasaApp.config(function ($httpProvider) {
     //$httpProvider.defaults.headers.common['Access-Token'] = '562391dc787b6bbabb0c99dd8db05160e989c68d0fc9ec29ee96dce3d247ddbe7bb368711ff361e67eee3ee7c465347f17b115fc63f7fc6f2b03044e87d09eda'
     $httpProvider.defaults.headers.common['Content-Type'] = 'application/json; charset=UTF-8';
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 
 });
 
-app.config([
+MadrasaApp.config([
     '$stateProvider',
     '$urlRouterProvider',
     '$translateProvider',
@@ -78,14 +79,15 @@ app.config([
             'monthly_fees': 'বেতন বাবদ ',
             'book_bill': 'কিতাব বাবদ ',
             'cash': 'নগদ ',
-            'arrears': 'বকেয়া '
+            'arrears': 'বকেয়া ',
+            'KARIMIA': '>> কারিমিয়া খালপাড় মাদ্রাসা'
 
         });
         $translateProvider.preferredLanguage('bn');
         $translateProvider.useSanitizeValueStrategy('sanitizeParameters');
     }]);
 
-app.config(['$compileProvider', '$mdThemingProvider', function ($compileProvider, $mdThemingProvider) {
+MadrasaApp.config(['$compileProvider', '$mdThemingProvider', function ($compileProvider, $mdThemingProvider) {
     'use strict';
     $compileProvider.debugInfoEnabled(true);
     $mdThemingProvider.theme('default')
@@ -93,7 +95,7 @@ app.config(['$compileProvider', '$mdThemingProvider', function ($compileProvider
         .accentPalette('blue');
 }]);
 
-app.controller('mmsCtrl', [
+MadrasaApp.controller('mmsCtrl', [
     '$scope',
     '$http',
     '$translate',
@@ -102,8 +104,6 @@ app.controller('mmsCtrl', [
     '$httpParamSerializerJQLike',
     function ($scope, $http, $translate, $location, Records, $httpParamSerializerJQLike) {
         $scope.autoScroll = true;
-        $scope.base_url = 'http://localhost/angular_awesome/';
-
         /**
          * Function to change the default language
          * @param {String} key - language key
@@ -170,7 +170,7 @@ app.controller('mmsCtrl', [
 
     }]);
 
-app.factory('Records', ['$http', '$q', function ($http, $q) {
+MadrasaApp.factory('Records', ['$http', '$q', function ($http, $q) {
     return {
         data: {
             select: 'http://localhost/angular_awesome/model/select.php'
@@ -227,31 +227,50 @@ app.factory('Records', ['$http', '$q', function ($http, $q) {
 }]);
 
 
-app.controller('addItemController', ['$mdDialog', '$nutrition', '$scope', function ($mdDialog, $nutrition, $scope) {
+MadrasaApp.controller('addItemController', ['$nutrition', '$scope', function ($nutrition, $scope) {
     'use strict';
 
-    this.cancel = $mdDialog.cancel;
+    $scope.formModel = {};
+    $scope.submitting = false;
+    $scope.submitted = false;
+    $scope.has_error = false;
 
-    function success(dessert) {
-        $mdDialog.hide(dessert);
+    function error(dessert) {
+        console.log(":(");
+        console.log(dessert);
+        $scope.submitting = false;
+        $scope.submitted = false;
+        $scope.has_error = true;
     }
 
-    this.addItem = function () {
+    function success() {
+        console.log(":)");
+        $scope.submitting = false;
+        $scope.submitted = true;
+        $scope.has_error = false;
+    }
+
+    $scope.addItem = function () {
+
+        $scope.submitting = true;
+        console.log("Hey i'm submitted!");
+        console.log($scope.formModel);
+
         $scope.item.form.$setSubmitted();
 
         if($scope.item.form.$valid) {
-            $nutrition.desserts.save({dessert: $scope.dessert}, success);
+            $nutrition.desserts.save($scope.formModel, success, error);
         }
     };
 
 }]);
-app.controller('deleteController', ['$authorize', 'desserts', '$mdDialog', '$nutrition', '$scope', '$q', function ($authorize, desserts, $mdDialog, $nutrition, $scope, $q) {
+MadrasaApp.controller('deleteController', ['$authorize', 'desserts', '$mdDialog', '$nutrition', '$scope', '$q', function ($authorize, desserts, $mdDialog, $nutrition, $scope, $q) {
     'use strict';
 
     this.cancel = $mdDialog.cancel;
 
     function deleteDessert(dessert, index) {
-        var deferred = $nutrition.desserts.remove({id: dessert._id});
+        var deferred = $nutrition.desserts.remove({id: dessert.id, tableName: 'students'});
 
         deferred.$promise.then(function () {
             desserts.splice(index, 1);
@@ -277,7 +296,7 @@ app.controller('deleteController', ['$authorize', 'desserts', '$mdDialog', '$nut
     };
 
 }]);
-app.controller('nutritionController', ['$mdDialog', '$nutrition', '$scope', function ($mdDialog, $nutrition, $scope) {
+MadrasaApp.controller('nutritionController', ['$mdDialog', '$nutrition', '$scope', function ($mdDialog, $nutrition, $scope) {
     'use strict';
 
     var bookmark;
@@ -325,7 +344,7 @@ app.controller('nutritionController', ['$mdDialog', '$nutrition', '$scope', func
             focusOnOpen: false,
             targetEvent: event,
             locals: { desserts: $scope.selected },
-            templateUrl: 'templates/delete-dialog.html',
+            templateUrl: 'view/templates/delete-dialog.html',
         }).then(getDesserts);
     };
 
@@ -362,15 +381,15 @@ app.controller('nutritionController', ['$mdDialog', '$nutrition', '$scope', func
         getDesserts();
     });
 }]);
-app.factory('$nutrition', ['$resource', function ($resource) {
+MadrasaApp.factory('$nutrition', ['$resource', function ($resource) {
     'use strict';
 
     return {
         desserts: $resource('http://localhost/angular_awesome/model/select.php')
     };
 }]);
-app.factory('$authorize', ['$resource', function ($resource) {
+MadrasaApp.factory('$authorize', ['$resource', function ($resource) {
     'use strict';
 
-    return $resource('https://infinite-earth-4803.herokuapp.com/authorize/:secret');
+    return $resource('http://localhost/angular_awesome/model/authorize.php');
 }]);

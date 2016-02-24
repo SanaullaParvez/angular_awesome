@@ -10,7 +10,7 @@ function post($var)
 $post = array_map('drop_empty', $_POST);
 
 $admission_no = post("admission_no");
-$admission_date = post("admission_date");
+$admission_date = date ("Y-m-d H:i:s", post("admission_date"));
 $name = post("name");
 $age = post("age");
 $father_name = post("father_name");
@@ -25,7 +25,7 @@ $cash = post("cash");
 $arrears = post("arrears");
 
 $sql = "INSERT INTO students (`admission_no`, `admission_data`, `name`, `age`, `father_name`, `guardian_name`, `relation`, `contact_no`, `class_name`, `rental_bill`, `monthly_fees`, `book_bill`, `cash`, `arrears`)
-VALUES ($admission_no, $admission_date, '{$name}', $age, '{$father_name}', '{$guardian_name}', '{$relation}', '{$contact_no}', $class_name, $rental_bill, $monthly_fees, $book_bill, $cash, $arrears)";
+VALUES ($admission_no, '{$admission_date}', '{$name}', $age, '{$father_name}', '{$guardian_name}', '{$relation}', '{$contact_no}', $class_name, $rental_bill, $monthly_fees, $book_bill, $cash, $arrears)";
 
 if ($mysqli->query($sql) === TRUE) {
     echo 'true';
