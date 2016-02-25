@@ -22,4 +22,4 @@
 <script src="libs/angular-messages/angular-messages.min.js"></script>
 <script src="libs/angular-resource/angular-resource.min.js"></script>
 <script src="libs/angular-material-data-table/dist/md-data-table.min.js"></script>
-<script src="assets/js/myAngular.js"></script
+<script src="controllers/app.js"></script

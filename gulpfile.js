@@ -33,9 +33,9 @@ var libs = [
 var localFilesGlob = [
     'libs/**/*',
     'assets/**/*',
-    'controller/**',
+    'controllers/**',
     'model/**',
-    'view/**',
+    'views/**',
     'index.php'
 ];
 var remoteFolder = '/public_html';

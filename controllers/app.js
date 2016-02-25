@@ -32,31 +32,31 @@ MadrasaApp.config([
         $stateProvider
             .state('404', {
                 url: "/404",
-                templateUrl: "view/404.html"
+                templateUrl: "views/404.html"
             })
             .state('home', {
                 url: "/home",
-                templateUrl: "view/home.html"
+                templateUrl: "views/home.html"
             })
             .state('student', {
                 url: "/student",
-                templateUrl: "view/student/students.html"
+                templateUrl: "views/student/students.html"
             })
             .state('student_admission', {
                 url: "/student_admission",
-                templateUrl: "view/student/form.html"
+                templateUrl: "views/student/form.html"
             })
             .state('teacher', {
                 url: "/teacher",
-                templateUrl: "view/teacher/teachers.html"
+                templateUrl: "views/teacher/teachers.html"
             })
             .state('teacher_admission', {
                 url: "/teacher_admission",
-                templateUrl: "view/teacher/form.html"
+                templateUrl: "views/teacher/form.html"
             })
             .state('donor', {
                 url: "/donor",
-                templateUrl: "view/donor/donors.html"
+                templateUrl: "views/donor/donors.html"
             });
         $translateProvider.translations('bn', {
             'STUDENT': 'ছাত্র',
@@ -149,7 +149,7 @@ MadrasaApp.controller('mmsCtrl', [
             console.log($scope.formModel);
 
             $http({
-                url: 'http://localhost/angular_awesome/model/insert.php',
+                url: 'http://localhost/angular_awesome/models/insert.php',
                 method: 'POST',
                 paramSerializer: '$httpParamSerializerJQLike',
                 data: $scope.formModel
@@ -173,7 +173,7 @@ MadrasaApp.controller('mmsCtrl', [
 MadrasaApp.factory('Records', ['$http', '$q', function ($http, $q) {
     return {
         data: {
-            select: 'http://localhost/angular_awesome/model/select.php'
+            select: 'http://localhost/angular_awesome/models/select.php'
         },
         students: function () {
             var d = $q.defer();
@@ -332,7 +332,7 @@ MadrasaApp.controller('nutritionController', ['$mdDialog', '$nutrition', '$scope
             controllerAs: 'ctrl',
             focusOnOpen: false,
             targetEvent: event,
-            templateUrl: 'view/student/form.html',
+            templateUrl: 'views/student/form.html',
         }).then(getDesserts);
     };
 
@@ -344,7 +344,7 @@ MadrasaApp.controller('nutritionController', ['$mdDialog', '$nutrition', '$scope
             focusOnOpen: false,
             targetEvent: event,
             locals: { desserts: $scope.selected },
-            templateUrl: 'view/templates/delete-dialog.html',
+            templateUrl: 'views/templates/delete-dialog.html',
         }).then(getDesserts);
     };
 
@@ -385,11 +385,11 @@ MadrasaApp.factory('$nutrition', ['$resource', function ($resource) {
     'use strict';
 
     return {
-        desserts: $resource('http://localhost/angular_awesome/model/select.php')
+        desserts: $resource('http://localhost/angular_awesome/models/select.php')
     };
 }]);
 MadrasaApp.factory('$authorize', ['$resource', function ($resource) {
     'use strict';
 
-    return $resource('http://localhost/angular_awesome/model/authorize.php');
+    return $resource('http://localhost/angular_awesome/models/authorize.php');
 }]);

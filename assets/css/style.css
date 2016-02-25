@@ -18,6 +18,16 @@
     content:"*";
     color:red;
 }
+.vertical-line{
+    margin-right: 20px;
+    border-right: 2px solid rgba(0,0,0,.075);
+    padding-right: 40px;
+}
+.form-actions{
+    margin: 0;
+    background-color: transparent;
+    text-align: center;
+}
 /* Material Icons
  START
 */
