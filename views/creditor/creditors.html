@@ -42,26 +42,30 @@
             <table md-table md-row-select ng-model="selected" md-progress="promise">
                 <thead md-head md-order="query.order" md-on-reorder="onReorder">
                 <tr md-row>
-                    <th md-column md-order-by="name"><span>{{'date_of_registration' | translate}}</span></th>
-                    <th md-column md-numeric md-order-by="admission_no"><span>{{'donor_name' | translate}}</span></th>
-                    <th md-column md-numeric>{{'address' | translate}}</th>
-                    <th md-column md-numeric>{{'start_date' | translate}}</th>
+                    <th md-column md-order-by="name"><span>{{'creditor_name' | translate}}</span></th>
+                    <th md-column md-numeric md-order-by="date_of_exchange"><span>{{'date_of_registration' | translate}}</span></th>
+                    <th md-column md-numeric>{{'description' | translate}}</th>
                     <th md-column md-numeric>{{'amount' | translate}}</th>
+                    <th md-column md-numeric>{{'rate' | translate}}</th>
+                    <th md-column md-numeric>{{'previous_due' | translate}}</th>
+                    <th md-column md-numeric>{{'payment' | translate}}</th>
                 </tr>
                 </thead>
                 <tbody md-body>
-                <tr md-row md-select="dessert" md-select-id="{{dessert.name}}" md-auto-select ng-repeat="dessert in donors.records">
-                    <td md-cell>{{dessert.start_date}}</td>
+                <tr md-row md-select="dessert" md-select-id="{{dessert.name}}" md-auto-select ng-repeat="dessert in creditors.records">
                     <td md-cell>{{dessert.name}}</td>
-                    <td md-cell>{{dessert.address}}</td>
-                    <td md-cell>{{dessert.start_date |  date:'MM' | translateToBengali }}</td>
-                    <td md-cell>{{dessert.amount | number: 1}}</td>
+                    <td md-cell>{{dessert.date_of_exchange |  date:'dd MMM,yy'}}</td>
+                    <td md-cell>{{dessert.description}}</td>
+                    <td md-cell>{{dessert.amount}}</td>
+                    <td md-cell>{{dessert.rate }}</td>
+                    <td md-cell>{{dessert.previous_due | number: 1}}</td>
+                    <td md-cell>{{dessert.payment | number: 1}}</td>
                 </tr>
                 </tbody>
             </table>
         </md-table-container>
 
-        <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{donors.count}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination>
+        <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{creditors.count}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination>
 
     </md-card>
 
@@ -74,12 +78,12 @@
     <!--<table class="table table-striped">-->
         <!--<thead>-->
         <!--<tr>-->
-            <!--<th data-ng-repeat="key in donor_key">{{key}}</th>-->
+            <!--<th data-ng-repeat="key in creditor_key">{{key}}</th>-->
         <!--</tr>-->
         <!--</thead>-->
         <!--<tbody>-->
-        <!--<tr data-ng-repeat="donor in donors">-->
-            <!--<td data-ng-repeat="val in donor">{{val}}</td>-->
+        <!--<tr data-ng-repeat="creditor in creditors">-->
+            <!--<td data-ng-repeat="val in creditor">{{val}}</td>-->
         <!--</tr>-->
         <!--</tbody>-->
     <!--</table>-->

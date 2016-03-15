@@ -1,6 +1,6 @@
 <md-content layout="column" flex>
 
-    <md-card ng-controller="nutritionController">
+    <md-card>
 
         <md-toolbar class="md-table-toolbar md-default" ng-hide="selected.length || filter.show">
             <div class="md-toolbar-tools">
@@ -49,7 +49,7 @@
                 </tr>
                 </thead>
                 <tbody md-body>
-                <tr md-row md-select="dessert" md-select-id="{{dessert.name}}" md-auto-select ng-repeat="dessert in desserts.records">
+                <tr md-row md-select="dessert" md-select-id="{{dessert.name}}" md-auto-select ng-repeat="dessert in students.records">
                     <td md-cell>{{dessert.name}}</td>
                     <td md-cell>{{dessert.admission_no}}</td>
                     <td md-cell>{{dessert.admission_data}}</td>
@@ -59,7 +59,7 @@
             </table>
         </md-table-container>
 
-        <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{desserts.count}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination>
+        <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{students.count}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination>
 
     </md-card>
 

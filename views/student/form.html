@@ -1,10 +1,11 @@
-<div class="container-fluid" ng-controller="addItemController">
-    <form name="item.form" class="form-horizontal" ng-submit="addItem()" novalidate="novalidate">
+<div class="container-fluid">
+    <form name="student.form" class="form-horizontal" ng-submit="addStudent()" novalidate="novalidate">
         <div class="form-group">
             <div class="alert alert-danger text-center" ng-show="has_error">
                 <h3>There was a problem registering, please try again later!</h3>
             </div>
         </div>
+        <flash-message duration="5000"></flash-message>
         <div class="row">
             <div class="col-md-6 vertical-line">
                 <div class="form-group">
@@ -13,7 +14,8 @@
                     <input type="text"
                            class="form-control"
                            ng-model="formModel.admission_no"
-                           id="admission_no">
+                           id="admission_no"
+                           required="required">
 
                 </div>
 
@@ -23,7 +25,8 @@
                     <input type="date"
                            class="form-control"
                            ng-model="formModel.admission_date"
-                           id="admission_date">
+                           id="admission_date"
+                           required="required">
 
                 </div>
 
@@ -33,7 +36,8 @@
                     <input type="text"
                            class="form-control"
                            ng-model="formModel.name"
-                           id="name">
+                           id="name"
+                           required="required">
 
                 </div>
 
@@ -46,7 +50,8 @@
                            ng-model="formModel.age"
                            min="3"
                            max="64"
-                           id="age">
+                           id="age"
+                           required="required">
 
                 </div>
 
@@ -99,7 +104,8 @@
 
                     <select id="class_name"
                             class="form-control"
-                            ng-model="formModel.class_name">
+                            ng-model="formModel.class_name"
+                            required="required">
                         <option value="">Please Choose</option>
                         <option value="1">Male</option>
                         <option value="2">Female</option>
@@ -173,5 +179,5 @@
             </button>
         </div>
     </form>
-    <pre>{{ formModel | json }}</pre>
+    <!--<pre>{{ formModel | json }}</pre>-->
 </div>

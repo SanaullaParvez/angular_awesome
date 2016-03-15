@@ -1,0 +1,71 @@
+<div class="container-fluid">
+    <form name="donor.form" class="form-horizontal" ng-submit="addDonor()" novalidate="novalidate">
+        <div class="form-group">
+            <div class="alert alert-danger text-center" ng-show="has_error">
+                <h3>There was a problem registering, please try again later!</h3>
+            </div>
+        </div>
+        <flash-message duration="5000"></flash-message>
+        <div class="row">
+            <div class="col-md-6 vertical-line">
+
+                <div class="form-group">
+                    <label for="name">{{'donor_name' | translate}}</label>
+
+                    <input type="text"
+                           class="form-control"
+                           ng-model="formModel.name"
+                           id="name"
+                           required="required">
+
+                </div>
+
+                <div class="form-group">
+                    <label for="address">{{'address' | translate}}</label>
+
+                    <input type="text"
+                           class="form-control"
+                           ng-model="formModel.address"
+                           id="address">
+
+                </div>
+
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="start_date">{{'start_date' | translate}}</label>
+
+                    <input type="date"
+                           class="form-control"
+                           ng-model="formModel.start_date"
+                           id="start_date"
+                           required="required">
+
+                </div>
+
+                <div class="form-group">
+                    <label for="amount">{{'amount' | translate}}</label>
+
+                    <input type="number"
+                           class="form-control"
+                           ng-model="formModel.amount"
+                           id="amount"
+                           required="required"
+                           min="50">
+
+                </div>
+
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary"
+                    ladda="submitting"
+                    data-style="expand-right"
+                    type="submit">
+                <span ng-show="submitting">Registering</span>
+                <span ng-show="!submitting">Register</span>
+            </button>
+        </div>
+    </form>
+    <!--<pre>{{ formModel | json }}</pre>-->
+</div>

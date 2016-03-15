@@ -25,6 +25,7 @@ require __DIR__.'/../constants/header.php';
     <!-- data-table style sheet -->
     <link href="libs/angular-material/angular-material.min.css" rel="stylesheet">
     <link href="libs/angular-material-data-table/dist/md-data-table.min.css" rel="stylesheet">
+    <link href="libs/angular-flash-alert/dist/angular-flash.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="assets/css/dashboard.css" rel="stylesheet">

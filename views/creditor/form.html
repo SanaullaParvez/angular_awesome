@@ -1,0 +1,82 @@
+<div class="container-fluid">
+    <form name="creditor.form" class="form-horizontal" ng-submit="addCreditor()" novalidate="novalidate">
+        <div class="form-group">
+            <div class="alert alert-danger text-center" ng-show="has_error">
+                <h3>There was a problem registering, please try again later!</h3>
+            </div>
+        </div>
+        <flash-message duration="5000"></flash-message>
+        <div class="row">
+            <div class="col-md-6 vertical-line">
+
+                <div class="form-group">
+                    <label for="name">{{'creditor_name' | translate}}</label>
+
+                    <input type="text"
+                           class="form-control"
+                           ng-model="formModel.name"
+                           id="name"
+                           required="required">
+
+                </div>
+                <div class="form-group">
+                    <label for="date_of_exchange">{{'date_of_registration' | translate}}</label>
+
+                    <input type="date"
+                           class="form-control"
+                           ng-model="formModel.date_of_exchange"
+                           id="date_of_exchange"
+                           required="required">
+
+                </div>
+                <div class="form-group">
+                    <label for="description">{{'description' | translate}}</label>
+                    <textarea class="form-control"
+                              rows="3"
+                              ng-model="formModel.description"
+                              id="description"></textarea>
+                </div>
+
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="amount">{{'amount' | translate}}</label>
+                    <input type="number" class="form-control" ng-model="formModel.amount" id="amount" >
+                </div>
+                <div class="form-group">
+                    <label for="rate">{{'rate' | translate}}</label>
+                    <input type="number" class="form-control" ng-model="formModel.rate" id="rate" >
+                </div>
+                <div class="form-group">
+                    <label>{{'total' | translate}}</label>
+                    <input type="number" class="form-control" value={{formModel.amount*formModel.rate}} disabled>
+                </div>
+                <div class="form-group">
+                    <label for="previous_due">{{'previous_due' | translate}}</label>
+                    <input type="number" class="form-control" ng-model="formModel.previous_due" id="previous_due" >
+                </div>
+                <div class="form-group">
+                    <label for="payment">{{'payment' | translate}}</label>
+                    <input type="number" class="form-control" ng-model="formModel.payment" id="payment" max={{formModel.previous_due}}>
+                </div>
+                <div class="form-group">
+                    <label>{{'current_dues' | translate}}</label>
+                    <input type="number" class="form-control" value={{formModel.previous_due-formModel.payment}} disabled>
+                </div>
+
+
+
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary"
+                    ladda="submitting"
+                    data-style="expand-right"
+                    type="submit">
+                <span ng-show="submitting">Registering</span>
+                <span ng-show="!submitting">Register</span>
+            </button>
+        </div>
+    </form>
+    <!--<pre>{{ formModel | json }}</pre>-->
+</div>

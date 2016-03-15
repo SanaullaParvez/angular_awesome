@@ -1,15 +1,108 @@
-<h2 class="sub-header">{{ 'TEACHER' | translate }}</h2>
-<div class="table-responsive">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th data-ng-repeat="key in teacher_key">{{key}}</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr data-ng-repeat="teacher in teachers">
-            <td data-ng-repeat="val in teacher">{{val}}</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<md-content layout="column" flex>
+
+    <md-card>
+
+        <md-toolbar class="md-table-toolbar md-default" ng-hide="selected.length || filter.show">
+            <div class="md-toolbar-tools">
+                <h2 class="md-title">{{ 'STUDENT' | translate }}</h2>
+                <div flex></div>
+                <md-button class="md-icon-button" ng-click="filter.show = true">
+                    <md-icon>filter_list</md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="addItem($event)">
+                    <md-icon>local_dining</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-toolbar class="md-table-toolbar md-default" ng-show="filter.show && !selected.length">
+            <div class="md-toolbar-tools">
+                <md-icon>search</md-icon>
+                <form flex name="filter.form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="query.filter" ng-model-options="filter.options" placeholder="search">
+                    </div>
+                </form>
+                <md-button class="md-icon-button" ng-click="removeFilter()">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-toolbar class="md-table-toolbar alternate" ng-show="selected.length">
+            <div class="md-toolbar-tools" layout-align="space-between">
+                <div>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</div>
+                <md-button class="md-icon-button" ng-click="delete($event)">
+                    <md-icon>delete</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-table-container>
+            <table md-table md-row-select ng-model="selected" md-progress="promise">
+                <thead md-head md-order="query.order" md-on-reorder="onReorder">
+                <tr md-row>
+                    <th md-column md-numeric>{{'ID' | translate}}</th>
+                    <th md-column md-numeric md-order-by="admission_no"><span>{{'teacher_admission_no' | translate}}</span></th>
+                    <th md-column md-order-by="name"><span>{{'name' | translate}}</span></th>
+                    <th md-column md-numeric>{{'address' | translate}}</th>
+                    <th md-column md-numeric>{{'contact_no' | translate}}</th>
+                    <th md-column md-numeric>{{'designation' | translate}}</th>
+                    <th md-column md-numeric>{{'basic_salary' | translate}}</th>
+                    <th md-column md-numeric>{{'honors_salary' | translate}}</th>
+                    <th md-column md-numeric>{{'attendance_salary' | translate}}</th>
+                    <th md-column md-numeric>{{'eid_bonus' | translate}}</th>
+                    <th md-column md-numeric>{{'effort_bonus' | translate}}</th>
+                    <th md-column md-numeric>{{'treatment_bonus' | translate}}</th>
+                    <th md-column md-numeric>{{'previous_due_salary' | translate}}</th>
+                    <th md-column md-numeric>{{'advance_salary' | translate}}</th>
+                    <th md-column md-numeric>{{'payment' | translate}}</th>
+                    <th md-column md-numeric>{{'total' | translate}}</th>
+                </tr>
+                </thead>
+                <tbody md-body>
+                <tr md-row md-select="dessert" md-select-id="{{dessert.admission_no}}" md-auto-select ng-repeat="dessert in teachers.records">
+                    <td md-cell>{{dessert.id}}</td>
+                    <td md-cell>{{dessert.admission_no}}</td>
+                    <td md-cell>{{dessert.name}}</td>
+                    <td md-cell>{{dessert.address}}</td>
+                    <td md-cell>{{dessert.contact_no}}</td>
+                    <td md-cell>{{dessert.designation}}</td>
+                    <td md-cell>{{dessert.basic_salary}}</td>
+                    <td md-cell>{{dessert.honors_salary}}</td>
+                    <td md-cell>{{dessert.attendance_salary}}</td>
+                    <td md-cell>{{dessert.eid_bonus}}</td>
+                    <td md-cell>{{dessert.effort_bonus}}</td>
+                    <td md-cell>{{dessert.treatment_bonus}}</td>
+                    <td md-cell>{{dessert.previous_due_salary}}</td>
+                    <td md-cell>{{dessert.advance_salary}}</td>
+                    <td md-cell>{{dessert.payment}}</td>
+                    <td md-cell>{{(dessert.basic_salary*1) + (dessert.honors_salary*1) + (dessert.attendance_salary*1) + (dessert.eid_bonus*1) + (dessert.effort_bonus*1) + (dessert.treatment_bonus*1) + (dessert.previous_due_salary*1) - (dessert.advance_salary*1) + (dessert.payment*1)}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+
+        <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{teachers.count}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination>
+
+    </md-card>
+
+</md-content>
+
+
+
+<!--<h2 class="sub-header">{{ 'TEACHER' | translate }}</h2>-->
+<!--<div class="table-responsive">-->
+    <!--<table class="table table-striped">-->
+        <!--<thead>-->
+        <!--<tr>-->
+            <!--<th data-ng-repeat="key in teacher_key">{{key}}</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--<tr data-ng-repeat="teacher in teachers">-->
+            <!--<td data-ng-repeat="val in teacher">{{val}}</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+    <!--</table>-->
+<!--</div>-->

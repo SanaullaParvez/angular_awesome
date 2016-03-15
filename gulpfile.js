@@ -14,6 +14,7 @@ var libs = [
     'libs/ladda/dist/ladda-themeless.min.css',
     'libs/angular-material/angular-material.min.css',
     'libs/angular-material-data-table/dist/md-data-table.min.css',
+    'libs/angular-flash-alert/dist/angular-flash.min.css',
     'libs/jquery/dist/jquery.min.js',
     'libs/bootstrap/dist/js/bootstrap.min.js',
     'libs/angular/angular.min.js',
@@ -29,6 +30,7 @@ var libs = [
     'libs/angular-messages/angular-messages.min.js',
     'libs/angular-resource/angular-resource.min.js',
     'libs/angular-material-data-table/dist/md-data-table.min.js',
+    'libs/angular-flash-alert/dist/angular-flash.min.js'
 ];
 var localFilesGlob = [
     'libs/**/*',

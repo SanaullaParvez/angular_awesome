@@ -27,7 +27,8 @@
     "bootstrap": "~3.3.2",
     "underscore": "~1.8.3",
     "angular-translate": "~2.9.1",
-    "angular-material-data-table": "~0.9.11"
+    "angular-material-data-table": "~0.9.11",
+    "angular-flash-alert": "~2.2.4"
   },
   "devDependencies": {
     "gulp": "~3.9.1",

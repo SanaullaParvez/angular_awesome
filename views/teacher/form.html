@@ -1,0 +1,127 @@
+<div class="container-fluid">
+    <form name="teacher.form" class="form-horizontal" ng-submit="addTeacher()" novalidate="novalidate">
+        <div class="form-group">
+            <div class="alert alert-danger text-center" ng-show="has_error">
+                <h3>There was a problem registering, please try again later!</h3>
+            </div>
+        </div>
+        <flash-message duration="5000"></flash-message>
+        <div class="row">
+            <div class="col-md-6 vertical-line">
+                <div class="form-group">
+                    <label for="teacher_admission_no">{{'teacher_admission_no' | translate}}</label>
+                    <input type="number"
+                           class="form-control"
+                           ng-model="formModel.admission_no"
+                           id="teacher_admission_no"
+                           required="required">
+
+                </div>
+                <div class="form-group">
+                    <label for="teacher_admission_date">{{'teacher_admission_date' | translate}}</label>
+
+                    <input type="date"
+                           class="form-control"
+                           ng-model="formModel.teacher_admission_date"
+                           id="teacher_admission_date"
+                           required="required">
+                </div>
+                <div class="form-group">
+                    <label for="name">{{'name' | translate}}</label>
+
+                    <input type="text"
+                           class="form-control"
+                           ng-model="formModel.name"
+                           id="name"
+                           required="required">
+
+                </div>
+                <div class="form-group">
+                    <label for="address">{{'address' | translate}}</label>
+
+                    <input type="text"
+                           class="form-control"
+                           ng-model="formModel.address"
+                           id="address">
+
+                </div>
+                <div class="form-group">
+                    <label for="contact_no">{{'contact_no' | translate}}</label>
+
+                    <input type="text"
+                           class="form-control"
+                           ng-model="formModel.contact_no"
+                           id="contact_no">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="designation">{{'designation' | translate}}</label>
+
+                    <input type="text"
+                           class="form-control"
+                           ng-model="formModel.designation"
+                           id="designation">
+
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="basic_salary">{{'basic_salary' | translate}}</label>
+                    <input type="number" class="form-control" ng-model="formModel.basic_salary" id="basic_salary"
+                           required="required">
+                </div>
+
+                <div class="form-group">
+                    <label for="honors_salary">{{'honors_salary' | translate}}</label>
+                    <input type="number" class="form-control" ng-model="formModel.honors_salary" id="honors_salary">
+                </div>
+                <div class="form-group">
+                    <label for="attendance_salary">{{'attendance_salary' | translate}}</label>
+                    <input type="number" class="form-control" ng-model="formModel.attendance_salary"
+                           id="attendance_salary">
+                </div>
+                <div class="form-group">
+                    <label for="eid_bonus">{{'eid_bonus' | translate}}</label>
+                    <input type="number" class="form-control" ng-model="formModel.eid_bonus" id="eid_bonus">
+                </div>
+                <div class="form-group">
+                    <label for="effort_bonus">{{'effort_bonus' | translate}}</label>
+                    <input type="number" class="form-control" ng-model="formModel.effort_bonus" id="effort_bonus">
+                </div>
+                <div class="form-group">
+                    <label for="treatment_bonus">{{'treatment_bonus' | translate}}</label>
+                    <input type="number" class="form-control" ng-model="formModel.treatment_bonus" id="treatment_bonus">
+                </div>
+                <div class="form-group">
+                    <label for="previous_due_salary">{{'previous_due_salary' | translate}}</label>
+                    <input type="number" class="form-control" ng-model="formModel.previous_due_salary"
+                           id="previous_due_salary">
+                </div>
+                <div class="form-group">
+                    <label for="advance_salary">{{'advance_salary' | translate}}</label>
+                    <input type="number" class="form-control" ng-model="formModel.advance_salary" id="advance_salary">
+                </div>
+                <div class="form-group">
+                    <label for="payment">{{'payment' | translate}}</label>
+                    <input type="number" class="form-control" ng-model="formModel.payment" id="payment">
+                </div>
+                <div class="form-group">
+                    <label>{{'total_salary' | translate}}</label>
+                    <input type="number" class="form-control"
+                           value={{formModel.basic_salary+formModel.honors_salary+formModel.attendance_salary+formModel.eid_bonus+formModel.effort_bonus+formModel.treatment_bonus+formModel.previous_due_salary-formModel.advance_salary+formModel.payment}} disabled>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary"
+                    ladda="submitting"
+                    data-style="expand-right"
+                    type="submit">
+                <span ng-show="submitting">Registering</span>
+                <span ng-show="!submitting">Register</span>
+            </button>
+        </div>
+    </form>
+    <!--<pre>{{ formModel | json }}</pre>-->
+</div>

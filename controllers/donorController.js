@@ -1,13 +1,12 @@
 'use strict';
 
-MadrasaApp.controller('addStudentController', ['$nutrition', '$scope', 'Flash', function ($nutrition, $scope, Flash) {
+MadrasaApp.controller('addDonorController', ['$nutrition', '$scope','Flash', function ($nutrition, $scope, Flash) {
         'use strict';
 
         $scope.formModel = {};
         $scope.submitting = false;
         $scope.submitted = false;
         $scope.has_error = false;
-
         function error(dessert) {
             console.log(":(");
             console.log(dessert);
@@ -18,7 +17,7 @@ MadrasaApp.controller('addStudentController', ['$nutrition', '$scope', 'Flash', 
 
         function success() {
             $scope.formModel = {};
-            $scope.student.form.$setPristine();
+            $scope.donor.form.$setPristine();
             Flash.create('success', '<strong>Well done!</strong> You successfully created a Donor.');
             console.log(":)");
             $scope.submitting = false;
@@ -26,30 +25,30 @@ MadrasaApp.controller('addStudentController', ['$nutrition', '$scope', 'Flash', 
             $scope.has_error = false;
         }
 
-        $scope.addStudent = function () {
+        $scope.addDonor = function () {
 
             $scope.submitting = true;
             console.log("Hey i'm submitted!");
             console.log($scope.formModel);
 
-            $scope.student.form.$setSubmitted();
+            $scope.donor.form.$setSubmitted();
 
-            if ($scope.student.form.$valid) {
-                $nutrition.students.save($scope.formModel, success, error);
+            if ($scope.donor.form.$valid) {
+                $nutrition.donors.save($scope.formModel, success, error);
             }
         };
 
     }])
-    .controller('deleteStudentController', ['$authorize', 'students', '$mdDialog', '$nutrition', '$scope', '$q', function ($authorize, students, $mdDialog, $nutrition, $scope, $q) {
+    .controller('deleteDonorController', ['$authorize', 'donors', '$mdDialog', '$nutrition', '$scope', '$q', function ($authorize, donors, $mdDialog, $nutrition, $scope, $q) {
         'use strict';
 
         this.cancel = $mdDialog.cancel;
 
         function deleteDessert(dessert, index) {
-            var deferred = $nutrition.students.remove({id: dessert.id, tableName: 'students'});
+            var deferred = $nutrition.donors.remove({id: dessert.id, tableName: 'donors'});
 
             deferred.$promise.then(function () {
-                students.splice(index, 1);
+                donors.splice(index, 1);
             });
 
             return deferred.$promise;
@@ -64,7 +63,7 @@ MadrasaApp.controller('addStudentController', ['$nutrition', '$scope', 'Flash', 
         }
 
         function success() {
-            $q.all(students.forEach(deleteDessert)).then(onComplete);
+            $q.all(donors.forEach(deleteDessert)).then(onComplete);
         }
 
         this.authorizeUser = function () {
@@ -72,7 +71,7 @@ MadrasaApp.controller('addStudentController', ['$nutrition', '$scope', 'Flash', 
         };
 
     }])
-    .controller('studentController', ['$mdDialog', '$nutrition', '$scope', function ($mdDialog, $nutrition, $scope) {
+    .controller('donorController', ['$mdDialog', '$nutrition', '$scope', function ($mdDialog, $nutrition, $scope) {
         'use strict';
 
         var bookmark;
@@ -90,46 +89,46 @@ MadrasaApp.controller('addStudentController', ['$nutrition', '$scope', 'Flash', 
             limit: '5',
             order: 'id',
             page: 1,
-            tableName: 'students'
+            tableName: 'donors'
         };
 
-        function getStudents(query) {
-            $scope.promise = $nutrition.students.get(query || $scope.query, success).$promise;
+        function getDonors(query) {
+            $scope.promise = $nutrition.donors.get(query || $scope.query, success).$promise;
         }
 
-        function success(students) {
-            $scope.students = students;
+        function success(donors) {
+            $scope.donors = donors;
         }
 
         $scope.addItem = function (event) {
             $mdDialog.show({
                 clickOutsideToClose: true,
-                controller: 'addStudentController',
+                controller: 'addDonorController',
                 controllerAs: 'ctrl',
                 focusOnOpen: false,
                 targetEvent: event,
-                templateUrl: 'views/student/form.html'
-            }).then(getStudents);
+                templateUrl: 'views/donor/form.html'
+            }).then(getDonors);
         };
 
         $scope.delete = function (event) {
             $mdDialog.show({
                 clickOutsideToClose: true,
-                controller: 'deleteStudentController',
+                controller: 'deleteDonorController',
                 controllerAs: 'ctrl',
                 focusOnOpen: false,
                 targetEvent: event,
-                locals: {students: $scope.selected},
+                locals: {donors: $scope.selected},
                 templateUrl: 'views/templates/delete-dialog.html'
-            }).then(getStudents);
+            }).then(getDonors);
         };
 
         $scope.onPaginate = function (page, limit) {
-            getStudents(angular.extend({}, $scope.query, {page: page, limit: limit}));
+            getDonors(angular.extend({}, $scope.query, {page: page, limit: limit}));
         };
 
         $scope.onReorder = function (order) {
-            getStudents(angular.extend({}, $scope.query, {order: order}));
+            getDonors(angular.extend({}, $scope.query, {order: order}));
         };
 
         $scope.removeFilter = function () {
@@ -154,6 +153,6 @@ MadrasaApp.controller('addStudentController', ['$nutrition', '$scope', 'Flash', 
                 $scope.query.page = bookmark;
             }
 
-            getStudents();
+            getDonors();
         });
     }]);

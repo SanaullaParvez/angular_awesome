@@ -1,6 +1,6 @@
 'use strict';
 
-MadrasaApp.controller('addStudentController', ['$nutrition', '$scope', 'Flash', function ($nutrition, $scope, Flash) {
+MadrasaApp.controller('addTeacherController', ['$nutrition', '$scope', function ($nutrition, $scope) {
         'use strict';
 
         $scope.formModel = {};
@@ -17,39 +17,36 @@ MadrasaApp.controller('addStudentController', ['$nutrition', '$scope', 'Flash', 
         }
 
         function success() {
-            $scope.formModel = {};
-            $scope.student.form.$setPristine();
-            Flash.create('success', '<strong>Well done!</strong> You successfully created a Donor.');
             console.log(":)");
             $scope.submitting = false;
             $scope.submitted = true;
             $scope.has_error = false;
         }
 
-        $scope.addStudent = function () {
+        $scope.addTeacher = function () {
 
             $scope.submitting = true;
             console.log("Hey i'm submitted!");
             console.log($scope.formModel);
 
-            $scope.student.form.$setSubmitted();
+            $scope.teacher.form.$setSubmitted();
 
-            if ($scope.student.form.$valid) {
-                $nutrition.students.save($scope.formModel, success, error);
+            if ($scope.teacher.form.$valid) {
+                $nutrition.teachers.save($scope.formModel, success, error);
             }
         };
 
     }])
-    .controller('deleteStudentController', ['$authorize', 'students', '$mdDialog', '$nutrition', '$scope', '$q', function ($authorize, students, $mdDialog, $nutrition, $scope, $q) {
+    .controller('deleteTeacherController', ['$authorize', 'teachers', '$mdDialog', '$nutrition', '$scope', '$q', function ($authorize, teachers, $mdDialog, $nutrition, $scope, $q) {
         'use strict';
 
         this.cancel = $mdDialog.cancel;
 
         function deleteDessert(dessert, index) {
-            var deferred = $nutrition.students.remove({id: dessert.id, tableName: 'students'});
+            var deferred = $nutrition.teachers.remove({id: dessert.id, tableName: 'teachers'});
 
             deferred.$promise.then(function () {
-                students.splice(index, 1);
+                teachers.splice(index, 1);
             });
 
             return deferred.$promise;
@@ -64,7 +61,7 @@ MadrasaApp.controller('addStudentController', ['$nutrition', '$scope', 'Flash', 
         }
 
         function success() {
-            $q.all(students.forEach(deleteDessert)).then(onComplete);
+            $q.all(teachers.forEach(deleteDessert)).then(onComplete);
         }
 
         this.authorizeUser = function () {
@@ -72,7 +69,7 @@ MadrasaApp.controller('addStudentController', ['$nutrition', '$scope', 'Flash', 
         };
 
     }])
-    .controller('studentController', ['$mdDialog', '$nutrition', '$scope', function ($mdDialog, $nutrition, $scope) {
+    .controller('teacherController', ['$mdDialog', '$nutrition', '$scope', function ($mdDialog, $nutrition, $scope) {
         'use strict';
 
         var bookmark;
@@ -90,46 +87,46 @@ MadrasaApp.controller('addStudentController', ['$nutrition', '$scope', 'Flash', 
             limit: '5',
             order: 'id',
             page: 1,
-            tableName: 'students'
+            tableName: 'teachers'
         };
 
-        function getStudents(query) {
-            $scope.promise = $nutrition.students.get(query || $scope.query, success).$promise;
+        function getTeachers(query) {
+            $scope.promise = $nutrition.teachers.get(query || $scope.query, success).$promise;
         }
 
-        function success(students) {
-            $scope.students = students;
+        function success(teachers) {
+            $scope.teachers = teachers;
         }
 
         $scope.addItem = function (event) {
             $mdDialog.show({
                 clickOutsideToClose: true,
-                controller: 'addStudentController',
+                controller: 'addItemController',
                 controllerAs: 'ctrl',
                 focusOnOpen: false,
                 targetEvent: event,
-                templateUrl: 'views/student/form.html'
-            }).then(getStudents);
+                templateUrl: 'views/teacher/form.html',
+            }).then(getTeachers);
         };
 
         $scope.delete = function (event) {
             $mdDialog.show({
                 clickOutsideToClose: true,
-                controller: 'deleteStudentController',
+                controller: 'deleteTeacherController',
                 controllerAs: 'ctrl',
                 focusOnOpen: false,
                 targetEvent: event,
-                locals: {students: $scope.selected},
+                locals: {teachers: $scope.selected},
                 templateUrl: 'views/templates/delete-dialog.html'
-            }).then(getStudents);
+            }).then(getTeachers);
         };
 
         $scope.onPaginate = function (page, limit) {
-            getStudents(angular.extend({}, $scope.query, {page: page, limit: limit}));
+            getTeachers(angular.extend({}, $scope.query, {page: page, limit: limit}));
         };
 
         $scope.onReorder = function (order) {
-            getStudents(angular.extend({}, $scope.query, {order: order}));
+            getTeachers(angular.extend({}, $scope.query, {order: order}));
         };
 
         $scope.removeFilter = function () {
@@ -154,6 +151,6 @@ MadrasaApp.controller('addStudentController', ['$nutrition', '$scope', 'Flash', 
                 $scope.query.page = bookmark;
             }
 
-            getStudents();
+            getTeachers();
         });
     }]);

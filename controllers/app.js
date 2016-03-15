@@ -9,7 +9,8 @@ var MadrasaApp = angular.module('mms', [
     'md.data.table',
     'ngMaterial',
     'ngResource',
-    'oc.lazyLoad'
+    'oc.lazyLoad',
+    'ngFlash'
 ]);
 
 MadrasaApp.config(function ($httpProvider) {
@@ -40,34 +41,72 @@ MadrasaApp.config([
             })
             .state('student', {
                 url: "/student",
-                templateUrl: "views/student/students.html"
+                templateUrl: "views/student/students.html",
+                controller: 'studentController'
             })
             .state('student_admission', {
                 url: "/student_admission",
-                templateUrl: "views/student/form.html"
+                templateUrl: "views/student/form.html",
+                controller: 'addStudentController'
             })
             .state('teacher', {
                 url: "/teacher",
-                templateUrl: "views/teacher/teachers.html"
+                templateUrl: "views/teacher/teachers.html",
+                controller: 'teacherController'
             })
             .state('teacher_admission', {
                 url: "/teacher_admission",
-                templateUrl: "views/teacher/form.html"
+                templateUrl: "views/teacher/form.html",
+                controller: 'addTeacherController'
             })
             .state('donor', {
                 url: "/donor",
-                templateUrl: "views/donor/donors.html"
+                templateUrl: "views/donor/donors.html",
+                controller: 'donorController'
+            })
+            .state('donor_admission', {
+                url: "/donor_admission",
+                templateUrl: "views/donor/form.html",
+                controller: 'addDonorController'
+            })
+            .state('creditor', {
+                url: "/creditor",
+                templateUrl: "views/creditor/creditors.html",
+                controller: 'creditorController'
+            })
+            .state('creditor_admission', {
+                url: "/creditor_admission",
+                templateUrl: "views/creditor/form.html",
+                controller: 'addCreditorController'
             });
         $translateProvider.translations('bn', {
-            'STUDENT': 'ছাত্র',
-            'TEACHER': 'ওস্তাদ',
-            'ADMISSION': 'ভর্তি',
-            'DONOR': 'দাতা ',
-            'ADMISSION_FROM': 'This is a paragraph',
-            'STUDENT_ADMISSION':'ছাত্র ভর্তি',
+            'KARIMIA': '>> কারিমিয়া খালপাড় মাদ্রাসা',
 
-            'admission_no':'ভর্তি নং ',
-            'admission_date':'ভর্তির তারিখ ',
+            'TEACHER': 'ওস্তাদ',
+            'TEACHER_ADMISSION': 'নতুন ওস্তাদ',
+            'ID': 'ক্রমিক নং ',
+            'teacher_admission_no': 'নিয়োগ নং ',
+            'teacher_admission_date': 'মাস ',
+            'name': 'নাম ',
+            'address': 'ঠিকানা ',
+            'cantact_no': 'মোবাইল নং ',
+            'designation': 'পদবী ',
+            'basic_salary': 'মূল বেতন ',
+            'honors_salary': 'অতিরিক্ত দায়িত্বের সম্মানী ',
+            'attendance_salary': 'উপস্থিতি ',
+            'eid_bonus': 'ঈদ বোনাস ',
+            'effort_bonus': 'মেহনত বোনাস ',
+            'treatment_bonus': 'চিকিৎসা বোনাস ',
+            'previous_due_salary': 'পূর্বের বকেয়া ',
+            'advance_salary': 'অগ্রিম ',
+            'total_salary': 'মোট প্রাপ্য ',
+
+
+            'STUDENT': 'ছাত্র',
+            'ADMISSION': 'ভর্তি',
+            'STUDENT_ADMISSION': 'ছাত্র ভর্তি',
+            'admission_no': 'ভর্তি নং ',
+            'admission_date': 'ভর্তির তারিখ ',
             'student_name': 'ছাত্রের নাম ',
             'age': 'বয়স ',
             'father_name': 'পিতার নাম ',
@@ -80,7 +119,25 @@ MadrasaApp.config([
             'book_bill': 'কিতাব বাবদ ',
             'cash': 'নগদ ',
             'arrears': 'বকেয়া ',
-            'KARIMIA': '>> কারিমিয়া খালপাড় মাদ্রাসা'
+
+            'DONOR': 'দাতা ',
+            'donor_name': 'দাতার নাম ',
+            'date_of_registration': 'তারিখ ',
+            'amount': 'পরিমাণ ',
+            'start_date': 'মাস ',
+            'DONOR_ADMISSION': ' নতুন দাতা ',
+
+
+            'CREDITOR': 'পাওনাদার ',
+            'creditor_name': 'দাতার নাম ',
+            'description': 'বিবরণ ',
+            'rate': 'দর ',
+            'total': 'মোট ',
+            'previous_due': 'পূর্বের দেনা  ',
+            'payment': 'পরিশোধ ',
+            'current_dues': 'বর্তমান প্রাপ্য',
+            'CREDITOR_ADMISSION': ' নতুন পাওনাদার '
+
 
         });
         $translateProvider.preferredLanguage('bn');
@@ -97,12 +154,13 @@ MadrasaApp.config(['$compileProvider', '$mdThemingProvider', function ($compileP
 
 MadrasaApp.controller('mmsCtrl', [
     '$scope',
+    '$filter',
     '$http',
     '$translate',
     '$location',
-    'Records',
+    //'Records',
     '$httpParamSerializerJQLike',
-    function ($scope, $http, $translate, $location, Records, $httpParamSerializerJQLike) {
+    function ($scope, $filter, $http, $translate, $location, Records, $httpParamSerializerJQLike) {
         $scope.autoScroll = true;
         /**
          * Function to change the default language
@@ -115,65 +173,88 @@ MadrasaApp.controller('mmsCtrl', [
         $scope.isActive = function (viewLocation) {
             return viewLocation === $location.path();
         };
+
         /**
          * Function to get data list from Database
          */
-        Records.students().then(function (students) {
-            console.log(students);
-            $scope.students = students;
-            $scope.student_key = students.length ? Object.keys(students[0]) : '';
-        });
-        Records.teachers().then(function (teachers) {
-            console.log(teachers);
-            $scope.teachers = teachers;
-            $scope.teacher_key = teachers.length ? Object.keys(teachers[0]) : '';
-        });
-        Records.jamats().then(function (jamats) {
-            console.log(jamats);
-            $scope.jamats = jamats;
-        });
-        Records.donors().then(function (donors) {
-            console.log(donors);
-            $scope.donors = donors;
-            $scope.donor_key = donors.length ? Object.keys(donors[0]) : '';
-        });
+        /*        Records.students().then(function (students) {
+         console.log(students);
+         $scope.students = students;
+         $scope.student_key = students.length ? Object.keys(students[0]) : '';
+         });
+         Records.teachers().then(function (teachers) {
+         console.log(teachers);
+         $scope.teachers = teachers;
+         $scope.teacher_key = teachers.length ? Object.keys(teachers[0]) : '';
+         });
+         Records.jamats().then(function (jamats) {
+         console.log(jamats);
+         $scope.jamats = jamats;
+         });
+         Records.donors().then(function (donors) {
+         console.log(donors);
+         $scope.donors = donors;
+         $scope.donor_key = donors.length ? Object.keys(donors[0]) : '';
+         });*/
 
+        /*
+         $scope.formModel = {};
+         $scope.submitting = false;
+         $scope.submitted = false;
+         $scope.has_error = false;
+         $scope.onSubmit = function () {
+         $scope.submitting = true;
+         console.log("Hey i'm submitted!");
+         console.log($scope.formModel);
 
-        $scope.formModel = {};
-        $scope.submitting = false;
-        $scope.submitted = false;
-        $scope.has_error = false;
-        $scope.onSubmit = function () {
-            $scope.submitting = true;
-            console.log("Hey i'm submitted!");
-            console.log($scope.formModel);
+         $http({
+         url: 'http://localhost/angular_awesome/models/student.php',
+         method: 'POST',
+         paramSerializer: '$httpParamSerializerJQLike',
+         data: $scope.formModel
+         }).success(function (data) {
+         console.log(":)");
+         $scope.submitting = false;
+         $scope.submitted = true;
+         $scope.has_error = false;
+         }).error(function(data) {
+         console.log(":(");
+         console.log(data);
+         $scope.submitting = false;
+         $scope.submitted = false;
+         $scope.has_error = true;
+         });
 
-            $http({
-                url: 'http://localhost/angular_awesome/models/insert.php',
-                method: 'POST',
-                paramSerializer: '$httpParamSerializerJQLike',
-                data: $scope.formModel
-            }).success(function (data) {
-                console.log(":)");
-                $scope.submitting = false;
-                $scope.submitted = true;
-                $scope.has_error = false;
-            }).error(function(data) {
-                console.log(":(");
-                console.log(data);
-                $scope.submitting = false;
-                $scope.submitted = false;
-                $scope.has_error = true;
-            });
-
-        };
+         };
+         */
 
     }]);
+MadrasaApp.factory('$nutrition', ['$resource', function ($resource) {
+    'use strict';
 
-MadrasaApp.factory('Records', ['$http', '$q', function ($http, $q) {
+    return {
+        students: $resource('http://localhost/angular_awesome/models/student.php'),
+        donors: $resource('http://localhost/angular_awesome/models/donor.php'),
+        teachers: $resource('http://localhost/angular_awesome/models/teacher.php'),
+        creditors: $resource('http://localhost/angular_awesome/models/creditor.php')
+    };
+}]);
+MadrasaApp.factory('$authorize', ['$resource', function ($resource) {
+    'use strict';
+
+    return $resource('http://localhost/angular_awesome/models/authorize.php');
+}]);
+MadrasaApp.filter('translateToBengali', [function() {
+    return function (monthNumber) { //1 = January
+        var monthNames = [ 'জানুয়ারী ', 'ফেব্রুয়ারি ', 'মার্চ', 'এপ্রিল', 'মে ', 'জুন ',
+            'জুলাই ', 'অগাস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর' ];
+        return monthNames[monthNumber - 1];
+    }
+}]);
+/*MadrasaApp.factory('Records', ['$http', '$q', function ($http, $q) {
     return {
         data: {
-            select: 'http://localhost/angular_awesome/models/select.php'
+            select: 'http://localhost/angular_awesome/models/student.php'
         },
         students: function () {
             var d = $q.defer();
@@ -224,172 +305,4 @@ MadrasaApp.factory('Records', ['$http', '$q', function ($http, $q) {
             return d.promise;
         }
     }
-}]);
-
-
-MadrasaApp.controller('addItemController', ['$nutrition', '$scope', function ($nutrition, $scope) {
-    'use strict';
-
-    $scope.formModel = {};
-    $scope.submitting = false;
-    $scope.submitted = false;
-    $scope.has_error = false;
-
-    function error(dessert) {
-        console.log(":(");
-        console.log(dessert);
-        $scope.submitting = false;
-        $scope.submitted = false;
-        $scope.has_error = true;
-    }
-
-    function success() {
-        console.log(":)");
-        $scope.submitting = false;
-        $scope.submitted = true;
-        $scope.has_error = false;
-    }
-
-    $scope.addItem = function () {
-
-        $scope.submitting = true;
-        console.log("Hey i'm submitted!");
-        console.log($scope.formModel);
-
-        $scope.item.form.$setSubmitted();
-
-        if($scope.item.form.$valid) {
-            $nutrition.desserts.save($scope.formModel, success, error);
-        }
-    };
-
-}]);
-MadrasaApp.controller('deleteController', ['$authorize', 'desserts', '$mdDialog', '$nutrition', '$scope', '$q', function ($authorize, desserts, $mdDialog, $nutrition, $scope, $q) {
-    'use strict';
-
-    this.cancel = $mdDialog.cancel;
-
-    function deleteDessert(dessert, index) {
-        var deferred = $nutrition.desserts.remove({id: dessert.id, tableName: 'students'});
-
-        deferred.$promise.then(function () {
-            desserts.splice(index, 1);
-        });
-
-        return deferred.$promise;
-    }
-
-    function onComplete() {
-        $mdDialog.hide();
-    }
-
-    function error() {
-        $scope.error = 'Invalid secret.';
-    }
-
-    function success() {
-        $q.all(desserts.forEach(deleteDessert)).then(onComplete);
-    }
-
-    this.authorizeUser = function () {
-        $authorize.get({secret: $scope.authorize.secret}, success, error);
-    };
-
-}]);
-MadrasaApp.controller('nutritionController', ['$mdDialog', '$nutrition', '$scope', function ($mdDialog, $nutrition, $scope) {
-    'use strict';
-
-    var bookmark;
-
-    $scope.selected = [];
-
-    $scope.filter = {
-        options: {
-            debounce: 500
-        }
-    };
-
-    $scope.query = {
-        filter: '',
-        limit: '5',
-        order: 'id',
-        page: 1,
-        tableName: 'students'
-    };
-
-    function getDesserts(query) {
-        $scope.promise = $nutrition.desserts.get(query || $scope.query, success).$promise;
-    }
-
-    function success(desserts) {
-        $scope.desserts = desserts;
-    }
-
-    $scope.addItem = function (event) {
-        $mdDialog.show({
-            clickOutsideToClose: true,
-            controller: 'addItemController',
-            controllerAs: 'ctrl',
-            focusOnOpen: false,
-            targetEvent: event,
-            templateUrl: 'views/student/form.html',
-        }).then(getDesserts);
-    };
-
-    $scope.delete = function (event) {
-        $mdDialog.show({
-            clickOutsideToClose: true,
-            controller: 'deleteController',
-            controllerAs: 'ctrl',
-            focusOnOpen: false,
-            targetEvent: event,
-            locals: { desserts: $scope.selected },
-            templateUrl: 'views/templates/delete-dialog.html',
-        }).then(getDesserts);
-    };
-
-    $scope.onPaginate = function (page, limit) {
-        getDesserts(angular.extend({}, $scope.query, {page: page, limit: limit}));
-    };
-
-    $scope.onReorder = function (order) {
-        getDesserts(angular.extend({}, $scope.query, {order: order}));
-    };
-
-    $scope.removeFilter = function () {
-        $scope.filter.show = false;
-        $scope.query.filter = '';
-
-        if($scope.filter.form.$dirty) {
-            $scope.filter.form.$setPristine();
-        }
-    };
-
-    $scope.$watch('query.filter', function (newValue, oldValue) {
-        if(!oldValue) {
-            bookmark = $scope.query.page;
-        }
-
-        if(newValue !== oldValue) {
-            $scope.query.page = 1;
-        }
-
-        if(!newValue) {
-            $scope.query.page = bookmark;
-        }
-
-        getDesserts();
-    });
-}]);
-MadrasaApp.factory('$nutrition', ['$resource', function ($resource) {
-    'use strict';
-
-    return {
-        desserts: $resource('http://localhost/angular_awesome/models/select.php')
-    };
-}]);
-MadrasaApp.factory('$authorize', ['$resource', function ($resource) {
-    'use strict';
-
-    return $resource('http://localhost/angular_awesome/models/authorize.php');
-}]);
+}]);*/

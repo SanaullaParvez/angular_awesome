@@ -22,4 +22,9 @@
 <script src="libs/angular-messages/angular-messages.min.js"></script>
 <script src="libs/angular-resource/angular-resource.min.js"></script>
 <script src="libs/angular-material-data-table/dist/md-data-table.min.js"></script>
-<script src="controllers/app.js"></script
+<script src="libs/angular-flash-alert/dist/angular-flash.min.js"></script>
+<script src="controllers/app.js"></script>
+<script src="controllers/studentController.js"></script>
+<script src="controllers/donorController.js"></script>
+<script src="controllers/teacherController.js"></script>
+<script src="controllers/creditorController.js"></script>
