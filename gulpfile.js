@@ -7,7 +7,7 @@ var ftp = require( 'vinyl-ftp' );
 /** Configuration **/
 var user = process.env.FTP_USER;
 var password = process.env.FTP_PWD;
-var host = 'sanaulla.net46.net';
+var host = 'jamiakarimia-khalpar.netne.net';
 var port = 21;
 var libs = [
     'libs/bootstrap/dist/css/bootstrap.min.css',

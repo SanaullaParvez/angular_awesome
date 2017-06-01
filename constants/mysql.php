@@ -11,6 +11,6 @@
 //******************************************************
 define('MYSQL_SERVER', 'localhost');
 define('MYSQL_PORT', '3306');
-define('MYSQL_DB', 'a6207060_sana');
-define('MYSQL_USER', 'root');
-define('MYSQL_PASS', 'root123');
+define('MYSQL_DB', 'a3553644_sana');
+define('MYSQL_USER', 'admin');
+define('MYSQL_PASS', 'D@cker');
